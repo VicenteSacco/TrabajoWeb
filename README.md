@@ -1,9 +1,18 @@
 # TrabajoWeb
 Vicente Sacco Leon
+
+
 Cristian Montes
+
+
 Trabajo para la asignatura de ingenieria web
+
 Enlace al figma: https://www.figma.com/proto/oIq5Gxa83l8nGvL4hLFpDl/GamerAssurance?t=ocAXj7k4dVVHeQdD-1
+
+
 Version mobil: https://www.figma.com/proto/Jw809YhZ0AtRzuMAJJiRbq/GammerAssurance-mobil?t=ocAXj7k4dVVHeQdD-1
+
+
 **en el figma de mobil hay imagenes de carrusel que puede delizar**
 
 ------------Funcionalidades diseñadas en figma------------
