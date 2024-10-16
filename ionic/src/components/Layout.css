@@ -1,0 +1,38 @@
+/* Layout.css */
+
+/* Ocultar el botón del menú hamburguesa por defecto */
+.menu-button {
+    display: none;
+  }
+  
+  /* Mostrar el botón del menú hamburguesa y ocultar los botones de navegación cuando la ventana sea pequeña */
+  @media (max-width: 600px) {
+    .navbar-buttons {
+      display: none;
+    }
+    .menu-button {
+      display: flex;
+    }
+  }
+
+/* Estilos para el footer */
+.footer-title{
+  background-color: #000000; /* Color de fondo */
+  color: #f7f8fa; /* Color del texto */
+  text-align: center; /* Centrar el texto */
+  padding: 10px 0; /* Espaciado interno */
+  border-top: 1px solid #000000; /* Borde superior */
+}
+
+/* Estilos responsivos para el footer */
+@media (max-width: 600px) {
+  .footer-title {
+    padding: 5px 0; /* Reducir el espaciado interno */
+    font-size: 12px; /* Reducir el tamaño de la fuente */
+  }
+}
+
+
+
+
+
