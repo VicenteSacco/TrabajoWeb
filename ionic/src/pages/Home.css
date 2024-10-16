@@ -1,14 +1,15 @@
-.carousel .slide img {
-    width: 25%;
-    height: auto;
-    margin: 0 auto;
+/* Estilo para las imágenes del carrusel */
+.carousel img {
+  height: 25pc;
+  width: auto; /* Mantiene la proporción de la imagen */
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+}
 
-  }
-  
-  .carousel .legend {
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 10px;
-    font-size: 1.2em;
-    text-align: center;
-  }
+
+.carousel .legend {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  font-size: 1.2em;
+  text-align: center;
+}

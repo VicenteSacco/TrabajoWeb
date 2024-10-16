@@ -4,6 +4,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useHistory } from 'react-router-dom';
 import Layout from '../components/Layout';
+import './Home.css';
 
 
 const Home: React.FC = () => {
