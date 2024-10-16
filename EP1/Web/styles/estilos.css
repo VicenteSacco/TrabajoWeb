@@ -1,0 +1,111 @@
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+/*Estilo para el navbar*/
+.custom-navbar {
+  background-color: #1497f5 !important;
+  color: white !important;
+}
+
+.custom-navbar .nav-link {
+  color: white !important;
+}
+
+.custom-navbar .navbar-brand {
+  color: white !important;
+}
+
+.custom-navbar .dropdown-menu {
+  background-color: #1497f5;
+}
+
+.custom-navbar .dropdown-item {
+  color: white !important;
+}
+
+.custom-navbar .dropdown-item:hover {
+  background-color: #1177bb;
+  color: white !important;
+}
+
+/* Estilo para el botón "Buscar" */
+.custom-navbar .btn-outline-success {
+  background-color: white !important;
+  color: #1497f5 !important;
+  border-color: white !important;
+}
+
+.custom-navbar .btn-outline-success:hover {
+  background-color: #e6e6e6 !important;
+  color: #1497f5 !important;
+  border-color: #e6e6e6 !important;
+}
+
+/* Estilo para los botones "Iniciar Sesión" y "Registrarse" */
+.custom-navbar .btn-outline-light {
+  color: white !important;
+  border-color: white !important;
+}
+
+.custom-navbar .btn-outline-light:hover {
+  background-color: white !important;
+  color: #1497f5 !important;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center !important; /* Centra el carousel horizontalmente */
+  align-items: center !important; /* Centra el carousel verticalmente */
+  height: 100vh; /* Ajusta la altura del contenedor al 100% de la ventana gráfica */
+}
+
+.carousel {
+  width: 50%; /* Ajusta el ancho del carousel */
+  min-height: 200px; /* Ajusta la altura mínima del carousel */
+  border: 5px solid #1497f5; /* Agrega un marco al carousel */
+  border-radius: 10px; /* Opcional: agrega bordes redondeados */
+}
+
+.carousel-item {
+  height: 100%; /* Asegura que cada item del carousel ocupe toda la altura del carousel */
+}
+
+.carousel-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Asegura que las imágenes se ajusten al contenedor */
+}
+
+.carousel-container {
+  margin-top: 20px; /* Ajusta este valor según tus necesidades */
+}
+
+.footer {
+  margin-top: 20px; /* Ajusta este valor según tus necesidades */
+  background-color: black !important;
+  color: white;
+  text-align: center;
+}
+
+.form-floating {
+  margin: 0 auto;
+  margin-top: 20px; /* Ajusta este valor según tus necesidades */
+  width: 300px; /* Ajusta el ancho del formulario flotante */
+  padding: 10px; /* Ajusta el espacio interno del formulario flotante */
+  background-color: #f5f5f5; /* Cambia el color de fondo del formulario flotante */
+  border: 1px solid #ccc; /* Agrega un borde al formulario flotante */
+  border-radius: 5px; /* Opcional: agrega bordes redondeados al formulario flotante */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Agrega una sombra al formulario flotante */
+  font-family: Arial, sans-serif; /* Cambia la fuente del texto dentro del formulario flotante */
+  font-size: 14px; /* Cambia el tamaño de fuente del texto dentro del formulario flotante */
+  color: #333; /* Cambia el color del texto dentro del formulario flotante */
+}
+
+.btn btn-primary {
+  margin-top: 20px; /* Ajusta este valor según tus necesidades */
+}
+
