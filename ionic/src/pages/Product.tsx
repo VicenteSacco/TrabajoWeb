@@ -1,8 +1,13 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonCard, IonCardContent } from '@ionic/react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 
+import { IonIcon } from '@ionic/react';
+import { heart, storefrontOutline } from 'ionicons/icons';
+import { IonTextarea } from '@ionic/react';
+import './Product.css';
+import {cart} from 'ionicons/icons';
 const Product: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
@@ -11,12 +16,22 @@ const Product: React.FC = () => {
     id,
     name: 'Producto de Ejemplo',
     price: '$999.990',
+    description: 'Esta es una descripción detallada del producto de ejemplo.',
+    likes: 5,
+    unidades: 10,
     features: [
       'Característica 1',
       'Característica 2',
       'Característica 3'
     ],
     image: 'https://media.solotodo.com/media/products/1777144_picture_1688474884.png'
+  };
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -28,7 +43,7 @@ const Product: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-        <IonItem>
+          <IonItem>
             <IonLabel></IonLabel>
             <IonSelect placeholder="Selecciona un filtro">
               <IonSelectOption value="opcion1">Opción 1</IonSelectOption>
@@ -36,15 +51,58 @@ const Product: React.FC = () => {
               <IonSelectOption value="opcion3">Opción 3</IonSelectOption>
             </IonSelect>
           </IonItem>
+
+          <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px 0' }}>
+            <IonButton onClick={() => scrollToSection('descripcion')} fill="default">Descripción</IonButton>
+            <IonButton onClick={() => scrollToSection('calificacion')} fill="default">Calificación</IonButton>
+
+          </div>
+
           <img src={product.image} alt={product.name} style={{ width: '25%', height: 'auto' }} />
-          <h2>{product.price}</h2>
-          <ul>
+          <IonButton color="light">
+            <IonIcon slot="icon-only" icon={heart}></IonIcon>
+          </IonButton>
+          <IonButton color="light">
+            <IonIcon slot="icon-only" icon={cart} ></IonIcon>
+          </IonButton>
+          
+          <div>
+          <h2>{product.price}<IonButton color="primary">Aplicar descuento</IonButton></h2>
+          </div>
+          <div>
+          
+          <h2><IonIcon slot="icon-only" icon={storefrontOutline} >Unidades disponibles</IonIcon>{product.unidades} Unidades diponibles<IonButton color="primary">Cambiar stock</IonButton></h2>
+          </div>
+          
+          
+          
+          <IonCard id="descripcion">
+            <IonCardContent>
+              <h3>Descripción</h3>
+              <p>{product.description}</p>
+              <ul>
             {product.features.map((feature, index) => (
               <li key={index}>{feature}</li>
             ))}
           </ul>
+            </IonCardContent>
+          </IonCard>
           
-          <IonButton expand="full" color="primary">Agregar al Carrito</IonButton>
+          <IonCard id="calificacion">
+            <IonCardContent>
+              <h3>Calificación</h3>
+              <p>{product.likes} Me gustas</p>
+                  <IonTextarea
+                  aria-label="Custom textarea"
+                  placeholder="Escribe tu opinión aquí"
+                  class="custom"
+                  counter={true}
+                  maxlength={100}
+                ></IonTextarea>
+            </IonCardContent>
+          </IonCard>
+            
+          
         </IonContent>
       </IonPage>
     </Layout>
