@@ -9,20 +9,6 @@ aqui el ejemplo de los 3 documentos json:
 Productos (productos)
 {
 
-  "_id": "prod001",
-  "nombre": "Laptop XYZ",
-  "categoria": "notebooks",
-  "marca": "Marca A",
-  "precio": 1200,
-  "stock": 50,
-  "especificaciones": {
-    "procesador": "Intel i7",
-    "ram": "16GB",
-    "almacenamiento": "512GB SSD"
-  }
-}
-=======
-
     "_id": "prod001",
     "nombre": "Laptop XYZ",
     "categoria": "notebooks",
@@ -43,44 +29,6 @@ Productos (productos)
 Usuarios (usuarios)
 {
 
-  "_id": "user001",
-  "nombre": "Juan Perez",
-  "email": "juan.perez@example.com",
-  "direccion": "Calle Falsa 123",
-  "wishlist": ["prod001", "prod002"],
-  "carrito": [
-    {
-     "producto_id": "prod003",
-      "cantidad": 2
-    }
-  ]
-}
-
-
-Pedidos (pedidos)
-{
-  "_id": "pedido001",
-  "usuario_id": "user001",
-  "productos": [
-    {
-      "producto_id": "prod001",
-      "cantidad": 1,
-      "precio": 1200
-    },
-    {
-      "producto_id": "prod003",
-      "cantidad": 2,
-      "precio": 300
-    }
-  ],
-  "total": 1800,
-  "fecha": "2024-10-25"
-}
-
-
-
-=======
-  
     "_id": "user001",
     "nombre": "Juan Perez",
     "email": "juan.perez@example.com",
@@ -92,8 +40,9 @@ Pedidos (pedidos)
         "cantidad": 2
       }
     ]
-  
+
 }
+
 
 
 
