@@ -1,5 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonButton, IonCheckbox, IonList, IonSelect, IonSelectOption, IonText } from '@ionic/react';
 import React, { useState } from 'react';
+import './register.css';
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -12,20 +13,26 @@ const Register: React.FC = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
-
     if (!username) newErrors.username = 'El nombre de usuario es obligatorio';
     if (!rut) newErrors.rut = 'El RUT es obligatorio';
-    if (!email) newErrors.email = 'El correo electrónico es obligatorio';
+    if (!email) {
+      newErrors.email = 'El correo electrónico es obligatorio';
+    } else if (!validateEmail(email)) {
+      newErrors.email = 'El correo electrónico no es válido';
+    }
     if (!region) newErrors.region = 'La región es obligatoria';
     if (!comuna) newErrors.comuna = 'La comuna es obligatoria';
     if (!password) newErrors.password = 'La contraseña es obligatoria';
     if (password !== confirmPassword) newErrors.confirmPassword = 'Las contraseñas no coinciden';
     if (!termsAccepted) newErrors.termsAccepted = 'Debe aceptar los términos y condiciones';
-
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
@@ -59,7 +66,12 @@ const Register: React.FC = () => {
           {errors.rut && <IonText color="danger">{errors.rut}</IonText>}
           <IonItem>
             <IonLabel position="floating">Correo Electrónico</IonLabel>
-            <IonInput type="email" value={email} onIonChange={e => setEmail(e.detail.value!)} />
+            <IonInput
+              type="email"
+              value={email}
+              onIonChange={e => setEmail(e.detail.value!)}
+              className={errors.email ? 'input-error' : ''}
+            />
           </IonItem>
           {errors.email && <IonText color="danger">{errors.email}</IonText>}
           <IonItem>
