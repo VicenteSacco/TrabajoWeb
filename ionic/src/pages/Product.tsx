@@ -101,7 +101,6 @@ const Product: React.FC = () => {
                 ></IonTextarea>
             </IonCardContent>
           </IonCard>
-            
           
         </IonContent>
       </IonPage>
