@@ -1,4 +1,6 @@
 EP2 
+
+
 Decidimos optar por un modelo de base de datos no relacional, ya que por la naturaleza de nuestra página web, la flexibilidad y escalabilidad de MongoDB se alinean perfectamente con nuestras necesidades.
 MongoDB nos permite manejar grandes volúmenes de datos no estructurados de manera eficiente, y adaptarnos a los cambios en el esquema de datos sin necesidad de grandes reestructuraciones.
 
