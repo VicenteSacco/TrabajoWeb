@@ -1,7 +1,7 @@
 /* Estilo para las imágenes del carrusel */
 .carousel img {
-  height: 25pc;
-  width: auto; /* Mantiene la proporción de la imagen */
+  height: 40pc;
+  width: 30pc; /* Mantiene la proporción de la imagen */
   margin: 0 auto; /* Centra la imagen horizontalmente */
 }
 
