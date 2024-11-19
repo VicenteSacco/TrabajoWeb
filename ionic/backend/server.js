@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3000;
@@ -36,18 +35,13 @@ const productSchema = new mongoose.Schema({
   image: { type: String, required: true }
 });
 
+const userSchema = new mongoose.Schema({
+  usuario: {type:String,required: true},
+  pass: {type:String,required: true},
+  roll: {type:String,required: true}
+})
 
-  const userSchema = new mongoose.Schema({ 
-    Usuario: { type: String, required: true }, 
-    RUT: { type: String, required: true },
-    Email: { type: String, required: true }, 
-    Comuna: { type: String, required: true }, 
-    Pass: { type: String, required: true }, 
-    Roll: { type: String, required: true } 
-  });
-
-
-const user = mongoose.model('Usuario', userSchema);
+const user = mongoose.model('usuario', productSchema);
 const Product = mongoose.model('productos', productSchema);
 
 
@@ -74,22 +68,16 @@ app.post('/products', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => 
-  { try { const login = await user.findOne({ 
-    Usuario: req.body.username, 
-    Pass: req.body.password });
-     if (!login) 
-      { return res.status(400).send('Credenciales incorrectas'); 
+app.post('/login', async(req,res) => {
+  try{
+    const login = await user.findOne({
+      Usuario: req.body.user
+    });
+  }  
+  catch(error){
+    res.status(500).send('Error al obtener credenciales');
   }
-
-  const token = jwt.sign({ id: login._id, username: login.usuario, roll: user.roll},
-     'your_jwt_secret', { expiresIn: '24h' }); 
-     res.json({token, roll: user.roll}); 
-    } catch (error) 
-    { res.status(500).send('Error al obtener credenciales');
-      
-    }
-  });
+  })
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

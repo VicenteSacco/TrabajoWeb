@@ -1,6 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonButton, IonList, IonText } from '@ionic/react';
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -18,30 +17,21 @@ const Login: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     if (validateForm()) {
-      try {
-        const response = await axios.post('http://localhost:3000/login', {
-          username,
-          password
+      // Lógica para manejar el inicio de sesión
+      console.log('Formulario válido');
+      fetch('localhost:3000')
+        .then((res)=>{
+          res.json().then((data)=>{
+            localStorage.setItem("token" , data.token);
+          })
         });
-        const { token, roll } = response.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('roll', roll);
-        console.log('Inicio de sesión exitoso', roll);
-        // Redirige según el rol del usuario
-        //  if (roll === 'admin') {
-        //   // Redireccionar a la página de administrador
-        // } else {
-        //   // Redireccionar a la página de usuario normal
-        // }
-      } catch (error) {
-        console.error('Error al iniciar sesión', error);
-      }
     } else {
       console.log('Formulario inválido');
     }
   };
+
 
   return (
     <IonPage>
