@@ -1,21 +1,40 @@
-import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonCard, IonCardContent } from '@ionic/react';
+import React, { useState, useEffect } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonCard, IonCardContent, IonIcon, IonTextarea } from '@ionic/react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
-
-import { IonIcon } from '@ionic/react';
-import { heart, storefrontOutline } from 'ionicons/icons';
-import { IonTextarea } from '@ionic/react';
+import { heart, storefrontOutline, cart } from 'ionicons/icons';
+import { getItems, addItems } from '../services/apiService';
 import './Product.css';
-import {cart} from 'ionicons/icons';
+
 const Product: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+
+  const [items, setItems] = useState<any[]>([]);
+  const [newItemName, setNewItemName] = useState<string>('');
+
+  useEffect(() => {
+    loadItems();
+  }, []);
+
+  const loadItems = async () => {
+    const data = await getItems();
+    setItems(data);
+  };
+
+  const handleAddItem = async () => {
+    if (newItemName.trim()) {
+      const newItem = await addItems({ name: newItemName });
+      setItems([...items, newItem]);
+      setNewItemName('');
+    }
+  };
 
   // Datos de ejemplo del producto
   const product = {
     id,
     name: 'Producto de Ejemplo',
-    price: '$999.990',
+    price: 999000,
+    descuento: 200000,
     description: 'Esta es una descripción detallada del producto de ejemplo.',
     likes: 5,
     unidades: 10,
@@ -33,6 +52,17 @@ const Product: React.FC = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const [token, setToken] = useState();
+  useEffect(() => {
+    console.log(1)
+  },[] );
+  
+
+  const [descuento, setDescuento] = useState(product.descuento);
+  const aplicarDescuento = ( )=>{
+    setDescuento(0)
+  }
 
   return (
     <Layout>
@@ -55,7 +85,6 @@ const Product: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px 0' }}>
             <IonButton onClick={() => scrollToSection('descripcion')} fill="default">Descripción</IonButton>
             <IonButton onClick={() => scrollToSection('calificacion')} fill="default">Calificación</IonButton>
-
           </div>
 
           <img src={product.image} alt={product.name} style={{ width: '25%', height: 'auto' }} />
@@ -67,24 +96,21 @@ const Product: React.FC = () => {
           </IonButton>
           
           <div>
-          <h2>{product.price}<IonButton color="primary">Aplicar descuento</IonButton></h2>
+            <h2>{product.price-descuento}<IonButton color="primary" onClick={aplicarDescuento}>Aplicar descuento</IonButton></h2>
           </div>
           <div>
-          
-          <h2><IonIcon slot="icon-only" icon={storefrontOutline} >Unidades disponibles</IonIcon>{product.unidades} Unidades diponibles<IonButton color="primary">Cambiar stock</IonButton></h2>
+            <h2><IonIcon slot="icon-only" icon={storefrontOutline} >Unidades disponibles</IonIcon>{product.unidades} Unidades disponibles<IonButton color="primary">Cambiar stock</IonButton></h2>
           </div>
-          
-          
           
           <IonCard id="descripcion">
             <IonCardContent>
               <h3>Descripción</h3>
               <p>{product.description}</p>
               <ul>
-            {product.features.map((feature, index) => (
-              <li key={index}>{feature}</li>
-            ))}
-          </ul>
+                {product.features.map((feature, index) => (
+                  <li key={index}>{feature}</li>
+                ))}
+              </ul>
             </IonCardContent>
           </IonCard>
           
@@ -92,16 +118,15 @@ const Product: React.FC = () => {
             <IonCardContent>
               <h3>Calificación</h3>
               <p>{product.likes} Me gustas</p>
-                  <IonTextarea
-                  aria-label="Custom textarea"
-                  placeholder="Escribe tu opinión aquí"
-                  class="custom"
-                  counter={true}
-                  maxlength={100}
-                ></IonTextarea>
+              <IonTextarea
+                aria-label="Custom textarea"
+                placeholder="Escribe tu opinión aquí"
+                class="custom"
+                counter={true}
+                maxlength={100}
+              ></IonTextarea>
             </IonCardContent>
           </IonCard>
-          
         </IonContent>
       </IonPage>
     </Layout>

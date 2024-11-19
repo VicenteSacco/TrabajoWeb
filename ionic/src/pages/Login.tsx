@@ -21,10 +21,17 @@ const Login: React.FC = () => {
     if (validateForm()) {
       // Lógica para manejar el inicio de sesión
       console.log('Formulario válido');
+      fetch('localhost:3000')
+        .then((res)=>{
+          res.json().then((data)=>{
+            localStorage.setItem("token" , data.token);
+          })
+        });
     } else {
       console.log('Formulario inválido');
     }
   };
+
 
   return (
     <IonPage>
