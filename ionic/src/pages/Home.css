@@ -1,8 +1,6 @@
 /* Estilo para las imágenes del carrusel */
 .carousel img {
-  height: 40pc;
-  width: 30pc; /* Mantiene la proporción de la imagen */
-  margin: 0 auto; /* Centra la imagen horizontalmente */
+  width: 100pc; /* Mantiene la proporción de la imagen */
 }
 
 
@@ -12,4 +10,21 @@
   padding: 10px;
   font-size: 1.2em;
   text-align: center;
+}
+
+.carousel {
+    width: 30vw !important;
+    margin: 0 auto !important;
+}
+
+@media(max-width:900px){
+  .carousel {
+    width: 80vw !important;
+    margin: 0 auto !important;
+}
+  
+}
+
+.slider.animated {
+  align-items: center;
 }

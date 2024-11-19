@@ -3,7 +3,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIte
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { heart, storefrontOutline, cart } from 'ionicons/icons';
-import { getItems, addItem } from '../services/apiService';
+import { getItems, addItems } from '../services/apiService';
 import './Product.css';
 
 const Product: React.FC = () => {
@@ -23,7 +23,7 @@ const Product: React.FC = () => {
 
   const handleAddItem = async () => {
     if (newItemName.trim()) {
-      const newItem = await addItem({ name: newItemName });
+      const newItem = await addItems({ name: newItemName });
       setItems([...items, newItem]);
       setNewItemName('');
     }
@@ -33,7 +33,8 @@ const Product: React.FC = () => {
   const product = {
     id,
     name: 'Producto de Ejemplo',
-    price: '$999.990',
+    price: 999000,
+    descuento: 200000,
     description: 'Esta es una descripción detallada del producto de ejemplo.',
     likes: 5,
     unidades: 10,
@@ -51,6 +52,17 @@ const Product: React.FC = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const [token, setToken] = useState();
+  useEffect(() => {
+    console.log(1)
+  },[] );
+  
+
+  const [descuento, setDescuento] = useState(product.descuento);
+  const aplicarDescuento = ( )=>{
+    setDescuento(0)
+  }
 
   return (
     <Layout>
@@ -84,7 +96,7 @@ const Product: React.FC = () => {
           </IonButton>
           
           <div>
-            <h2>{product.price}<IonButton color="primary">Aplicar descuento</IonButton></h2>
+            <h2>{product.price-descuento}<IonButton color="primary" onClick={aplicarDescuento}>Aplicar descuento</IonButton></h2>
           </div>
           <div>
             <h2><IonIcon slot="icon-only" icon={storefrontOutline} >Unidades disponibles</IonIcon>{product.unidades} Unidades disponibles<IonButton color="primary">Cambiar stock</IonButton></h2>

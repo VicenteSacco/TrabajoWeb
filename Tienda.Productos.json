@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "6737d825541c427be9e199b3"
+  },
+  "id": 1,
+  "name": "Producto de Ejemplo",
+  "price": 999990,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 5,
+  "unidades": 10,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1777144_picture_1688474884.png"
+},
+{
+  "_id": {
+    "$oid": "6737d842541c427be9e199b4"
+  },
+  "id": 2,
+  "name": "Producto de Ejemplo 2",
+  "price": 799990,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 4,
+  "unidades": 15,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1777144_picture_1688474884.png"
+},
+{
+  "_id": {
+    "$oid": "6737d85c541c427be9e199b5"
+  },
+  "id": 3,
+  "name": "Producto de Ejemplo 3",
+  "price": 899990,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 4,
+  "unidades": 15,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1777144_picture_1688474884.png"
+}]
+
+
