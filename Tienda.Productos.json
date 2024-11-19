@@ -3,7 +3,7 @@
     "$oid": "6737d825541c427be9e199b3"
   },
   "id": 1,
-  "name": "Producto de Ejemplo",
+  "name": "GPU",
   "price": 999990,
   "description": "Esta es una descripción detallada del producto de ejemplo.",
   "likes": 5,
@@ -20,7 +20,7 @@
     "$oid": "6737d842541c427be9e199b4"
   },
   "id": 2,
-  "name": "Producto de Ejemplo 2",
+  "name": "Ram",
   "price": 799990,
   "description": "Esta es una descripción detallada del producto de ejemplo.",
   "likes": 4,
@@ -30,14 +30,14 @@
     "Característica 2",
     "Característica 3"
   ],
-  "image": "https://media.solotodo.com/media/products/1777144_picture_1688474884.png"
+  "image": "https://media.solotodo.com/media/products/1825042_picture_1731602677.webp"
 },
 {
   "_id": {
     "$oid": "6737d85c541c427be9e199b5"
   },
   "id": 3,
-  "name": "Producto de Ejemplo 3",
+  "name": "CPU",
   "price": 899990,
   "description": "Esta es una descripción detallada del producto de ejemplo.",
   "likes": 4,
@@ -47,7 +47,33 @@
     "Característica 2",
     "Característica 3"
   ],
-  "image": "https://media.solotodo.com/media/products/1777144_picture_1688474884.png"
+  "image": "https://media.solotodo.com/media/products/1166318_picture_1590702443.jpg"
+},
+
+  {
+    "_id": {
+      "$oid": "673c10523928ffd4a5a6e522"
+    },
+    "usuario": "invitado",
+    "RUT": "11.222.333-4",
+    "Email": "ejemplo@123.cl",
+    "Región": "Region1",
+    "Comuna": "Comuna1",
+    "Pass": "1234",
+    "Roll": "usuario"
+  },
+  {
+   "_id": {
+      "$oid": "673c10523928ffd4a5a6e523"
+    },
+    "usuario": "Admin",
+    "RUT": "22.333.444-5",
+    "Email": "admin@admin.cl",
+    "Región": "Region1",
+    "Comuna": "Comuna1",
+    "pass": "admin",
+    "roll": "admin"
+
 }]
 
 

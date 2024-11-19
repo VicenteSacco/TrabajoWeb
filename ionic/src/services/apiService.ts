@@ -11,3 +11,8 @@ export const addItems = async (products: { name: string }) => {
   const response = await axios.post(`${baseUrl}/products`, products);
   return response.data;
 };
+
+export const login = async (username: string, password: string) => {
+  const response = await axios.post(`${baseUrl}/login`, { username, password });
+  return response.data;
+};
