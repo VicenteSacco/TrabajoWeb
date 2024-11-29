@@ -1,17 +1,21 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonButton, IonList, IonText } from '@ionic/react';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import useAuthStore from '../store/authStore';
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [usuario, setUsuario] = useState('');
+  const [pass, setPass] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const history = useHistory();
+  const { login } = useAuthStore();
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!username) newErrors.username = 'El nombre de usuario es obligatorio';
-    if (!password) newErrors.password = 'La contraseña es obligatoria';
+    if (!usuario) newErrors.usuario = 'El nombre de usuario es obligatorio';
+    if (!pass) newErrors.pass = 'La contraseña es obligatoria';
 
     setErrors(newErrors);
 
@@ -22,24 +26,45 @@ const Login: React.FC = () => {
     if (validateForm()) {
       try {
         const response = await axios.post('http://localhost:3000/login', {
-          username,
-          password
+          usuario,
+          pass,
         });
-        const { token, roll } = response.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('roll', roll);
-        console.log('Inicio de sesión exitoso', roll);
-        // Redirige según el rol del usuario
-        //  if (roll === 'admin') {
-        //   // Redireccionar a la página de administrador
-        // } else {
-        //   // Redireccionar a la página de usuario normal
-        // }
-      } catch (error) {
-        console.error('Error al iniciar sesión', error);
+  
+        const { token, user } = response.data;
+  
+       
+        if (!user) {
+          console.error('User  data is undefined');
+          setErrors({ login: 'Error en la respuesta del servidor' });
+          return; 
+        }
+  
+        
+        const userData = {
+          ...user,
+          role: user.role || 'user' 
+        };
+  
+        
+        login(token, userData);
+  
+        console.log('Login successful, role:', userData.role);
+  
+        // Redirigir según el rol
+        if (userData.role === 'admin') {
+          history.push('/HomeAdmin/');
+        } else {
+          history.push('/home');
+        }
+      } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+          console.error('Error al iniciar sesión', error.response ? error.response.data : error.message);
+          setErrors({ login: 'Usuario o contraseña incorrectos' });
+        } else {
+          console.error('Error desconocido', error);
+          setErrors({ login: 'Error al iniciar sesión' });
+        }
       }
-    } else {
-      console.log('Formulario inválido');
     }
   };
 
@@ -54,14 +79,17 @@ const Login: React.FC = () => {
         <IonList>
           <IonItem>
             <IonLabel position="floating">Nombre de usuario</IonLabel>
-            <IonInput value={username} onIonChange={e => setUsername(e.detail.value!)} />
+            <IonInput value={usuario} onIonChange={e => setUsuario(e.detail.value!)} />
           </IonItem>
-          {errors.username && <IonText color="danger">{errors.username}</IonText>}
+          {errors.usuario && <IonText color="danger">{errors.usuario}</IonText>}
+          
           <IonItem>
             <IonLabel position="floating">Contraseña</IonLabel>
-            <IonInput type="password" value={password} onIonChange={e => setPassword(e.detail.value!)} />
+            <IonInput type="password" value={pass} onIonChange={e => setPass(e.detail.value!)} />
           </IonItem>
-          {errors.password && <IonText color="danger">{errors.password}</IonText>}
+          {errors.pass && <IonText color="danger">{errors.pass}</IonText>}
+          {errors.login && <IonText color="danger">{errors.login}</IonText>}
+          
           <IonButton expand="full" onClick={handleLogin}>Iniciar Sesión</IonButton>
         </IonList>
       </IonContent>

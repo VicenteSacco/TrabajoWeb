@@ -1,0 +1,14 @@
+.wishlist-item {
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .wishlist-item .ion-card-title {
+    font-weight: bold;
+  }
+  
+  .wishlist-item .ion-button {
+    margin-top: 10px;
+  }

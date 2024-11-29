@@ -1,31 +1,38 @@
+import React, { Suspense, lazy } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
-import CPU from './pages/CPU';
-import TarjetasGraficas from './pages/TarjetasGraficas';
-import MemoriasRAM from './pages/MemoriasRAM';
-import FuentesDePoder from './pages/FuentesDePoder';
-import PlacasBase from './pages/PlacasBase';
-import Coolers from './pages/Coolers';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import React from 'react';
-import Product from './pages/Product';
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
+import PrivateRoute from './components/PrivateRoute';
 
-/* Basic CSS for apps built with Ionic */
+// Carga diferida de páginas
+const HomeAdmin = lazy(() => import('./pages/HomeAdmin'));
+const Home = lazy(() => import('./pages/Home'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Product = lazy(() => import('./pages/Product'));
+const ProductAdmin = lazy(() => import('./pages/ProductAdmin'));
+const CPU = lazy(() => import('./pages/CPU'));
+const TarjetasGraficas = lazy(() => import('./pages/TarjetasGraficas'));
+const MemoriasRAM = lazy(() => import('./pages/MemoriasRAM'));
+const FuentesDePoder = lazy(() => import('./pages/FuentesDePoder'));
+const PlacasBase = lazy(() => import('./pages/PlacasBase'));
+const Coolers = lazy(() => import('./pages/Coolers'));
+const carrito = lazy(() => import('./pages/carrito'));
+const wishlist = lazy(() => import('./pages/wishlist')); 
+const Unauthorized = lazy(() => import('./pages/Unauthorized'));
+
+// Estilos Ionic
+import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
 import '@ionic/react/css/padding.css';
 import '@ionic/react/css/float-elements.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
+import '@ionic/react/css/display.css';
+
 
 setupIonicReact();
 
@@ -33,19 +40,39 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route path="/home" component={Home} exact={true} />
-        <Route path="/componentes-pcs/cpu" component={CPU} exact={true} />
-        <Route path="/componentes-pcs/gpu" component={TarjetasGraficas} exact={true} />
-        <Route path="/componentes-pcs/ram" component={MemoriasRAM} exact={true} />
-        <Route path="/componentes-pcs/psu" component={FuentesDePoder} exact={true} />
-        <Route path="/componentes-pcs/motherboard" component={PlacasBase} exact={true} />
-        <Route path="/componentes-pcs/coolers" component={Coolers} exact={true} />
-        <Route path="/login" component={Login} exact={true} />
-        <Route path="/register" component={Register} exact={true} />
-        <Redirect from="/" to="/home" exact />
-        <Route path="/home" component={Home} exact={true} />
-        <Route path="/product/:id" component={Product} exact={true} />
-        <Redirect from="/" to="/home" exact={true} />
+        <Suspense fallback={<div>Cargando...</div>}>
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/unauthorized" component={Unauthorized} />
+          
+          {/* Rutas de usuario */}
+          <PrivateRoute exact path="/product/:id" component={Product} role="user" />
+          <PrivateRoute exact path="/componentes-pcs/cpu" component={CPU} role="user" />
+          <PrivateRoute exact path="/componentes-pcs/gpu" component={TarjetasGraficas} role="user" />
+          <PrivateRoute exact path="/componentes-pcs/ram" component={MemoriasRAM} role="user" />
+          <PrivateRoute exact path="/componentes-pcs/psu" component={FuentesDePoder} role="user" />
+          <PrivateRoute exact path="/componentes-pcs/motherboard" component={PlacasBase} role="user" />
+          <PrivateRoute exact path="/componentes-pcs/coolers" component={Coolers} role="user" />
+          
+          {/* Rutas de carrito y wishlist */}
+          <PrivateRoute exact path="/Carrito" component={carrito} role="user" />
+          <PrivateRoute exact path="/Wishlist" component={wishlist} role="user" />
+          
+          {/* Rutas de administrador */}
+          <PrivateRoute exact path="/HomeAdmin" component={HomeAdmin} role='admin'/>
+          <PrivateRoute exact path="/ProductAdmin/:id" component={ProductAdmin} role="admin" />
+          <PrivateRoute exact path="/admin/cpu" component={CPU} role="admin" />
+          <PrivateRoute exact path="/admin/gpu" component={TarjetasGraficas} role="admin" />
+          <PrivateRoute exact path="/admin/ram" component={MemoriasRAM} role="admin" />
+          <PrivateRoute exact path="/admin/psu" component={FuentesDePoder} role="admin" />
+          <PrivateRoute exact path="/admin/motherboard" component={PlacasBase} role="admin" />
+          <PrivateRoute exact path="/admin/coolers" component={Coolers} role="admin" />
+          
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+        </Suspense>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
