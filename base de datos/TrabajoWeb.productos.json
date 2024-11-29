@@ -1,0 +1,108 @@
+[{
+  "_id": {
+    "$oid": "6737d825541c427be9e199b3"
+  },
+  "id": 1,
+  "name": "gpu-rtx4060",
+  "price": 182000,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 5,
+  "unidades": 15,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1777144_picture_1688474884.png",
+  "price2": 260000
+},
+{
+  "_id": {
+    "$oid": "6737d842541c427be9e199b4"
+  },
+  "id": 2,
+  "name": "memoria Ram Kingston fury 8GB",
+  "price": 24490,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 4,
+  "unidades": 15,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1819087_picture_1695496351.jpg",
+  "price2": 0
+},
+{
+  "_id": {
+    "$oid": "6737d85c541c427be9e199b5"
+  },
+  "id": 3,
+  "name": "CPU intel i5-12400f",
+  "price": 150000,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 4,
+  "unidades": 15,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1514024_picture_1640156807.jpg",
+  "price2": 0
+},
+{
+  "_id": {
+    "$oid": "67390643e6d81786476500fa"
+  },
+  "id": 4,
+  "name": "PSU Corsair cx550F RGB White",
+  "price": 80000,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 5,
+  "unidades": 10,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1533504_picture_1643181543.JPG",
+  "price2": 0
+},
+{
+  "_id": {
+    "$oid": "67390643e6d81786476500fb"
+  },
+  "id": 5,
+  "name": "ASRock B760M PRO RS/D4 WIFI",
+  "price": 170000,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 4,
+  "unidades": 15,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1749419_picture_1681472803.png",
+  "price2": 0
+},
+{
+  "_id": {
+    "$oid": "67390643e6d81786476500fc"
+  },
+  "id": 6,
+  "name": "Cougar Poseidon Elite ARGB 240 - Black",
+  "price": 65000,
+  "description": "Esta es una descripción detallada del producto de ejemplo.",
+  "likes": 4,
+  "unidades": 15,
+  "features": [
+    "Característica 1",
+    "Característica 2",
+    "Característica 3"
+  ],
+  "image": "https://media.solotodo.com/media/products/1842334_picture_1700108103.jpg",
+  "price2": 0
+}]

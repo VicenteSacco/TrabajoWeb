@@ -1,0 +1,46 @@
+[{
+  "_id": {
+    "$oid": "67497911f04011d1a179c4ad"
+  },
+  "usuario": "admin",
+  "pass": "$2b$10$OLamA9E9LwCNzumMqA0QGu79zkNdRJYswQUuW0DHu2hqMmAtTOteO",
+  "email": "admin@admin.cl",
+  "role": "admin",
+  "datos": {
+    "rut": "20.502.134-5",
+    "region": "Valparaíso",
+    "comuna": "Viña del Mar"
+  },
+  "wishlist": [],
+  "cart": [],
+  "createdAt": {
+    "$date": "2024-11-29T08:19:29.524Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-29T08:19:29.524Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67497979f04011d1a179c4bb"
+  },
+  "usuario": "1234",
+  "pass": "$2b$10$vbpAI6bE32.7cMwqgrh3yuWvBXx0pQ/Hj4dJcKN/fQOrrEsoOAHoe",
+  "email": "aaa@aaa.cl",
+  "role": "user",
+  "datos": {
+    "rut": "21.212.212-2",
+    "region": "Valparaíso",
+    "comuna": "Viña del Mar"
+  },
+  "wishlist": [],
+  "cart": [],
+  "createdAt": {
+    "$date": "2024-11-29T08:21:13.721Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-29T08:21:13.721Z"
+  },
+  "__v": 0
+}]
