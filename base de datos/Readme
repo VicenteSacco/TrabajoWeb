@@ -7,3 +7,5 @@ pass: admin
 cuenta usuario normal
 usuario: 1234
 pass: 1234
+
+tambien puede crear usuarios nuevos y cambiarle los roles segun corresponda
