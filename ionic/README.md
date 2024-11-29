@@ -71,11 +71,3 @@ Pedidos (pedidos)
 
 
 
-En cuanto a los patrones de diseño que usaremos en la pagina web seran:
-
-Drawer y de desborde
-
-estos diseños los usamos en la creacion de los mockups y los mantendremos para el proyecto.
-En la parte movil de nuestra pagina web se puede apreciar como los menús son de Drawer y cuando se quiere aplicar un filtro en el producto podemos apreciar el desborde.
-
-

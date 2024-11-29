@@ -1,67 +1,115 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonCard, IonCardContent, IonIcon, IonTextarea } from '@ionic/react';
+import { 
+  IonContent, 
+  IonHeader, 
+  IonPage, 
+  IonTitle, 
+  IonToolbar, 
+  IonButton, 
+  IonCard, 
+  IonCardContent, 
+  IonIcon,
+  IonTextarea,
+  useIonToast
+} from '@ionic/react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
-import { heart, storefrontOutline, cart } from 'ionicons/icons';
-import { getItems, addItems } from '../services/apiService';
+import { heart, cart } from 'ionicons/icons';
+import useCartStore from '../store/cartStore';
+import useAuthStore from '../store/authStore';
+import { getItemById } from '../services/apiService'; 
 import './Product.css';
 
+interface Product {
+  _id: string;
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  likes: number;
+  unidades: number;
+  features: string[];
+  image: string;
+}
+
 const Product: React.FC = () => {
+  const { addItem } = useCartStore();
+  const { addToWishlist } = useAuthStore(); 
   const { id } = useParams<{ id: string }>();
-
-  const [items, setItems] = useState<any[]>([]);
-  const [newItemName, setNewItemName] = useState<string>('');
-
-  useEffect(() => {
-    loadItems();
-  }, []);
-
-  const loadItems = async () => {
-    const data = await getItems();
-    setItems(data);
-  };
-
-  const handleAddItem = async () => {
-    if (newItemName.trim()) {
-      const newItem = await addItems({ name: newItemName });
-      setItems([...items, newItem]);
-      setNewItemName('');
-    }
-  };
-
-  // Datos de ejemplo del producto
-  const product = {
-    id,
-    name: 'Producto de Ejemplo',
-    price: 999000,
-    descuento: 200000,
-    description: 'Esta es una descripción detallada del producto de ejemplo.',
-    likes: 5,
-    unidades: 10,
-    features: [
-      'Característica 1',
-      'Característica 2',
-      'Característica 3'
-    ],
-    image: 'https://media.solotodo.com/media/products/1777144_picture_1688474884.png'
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const [token, setToken] = useState();
-  useEffect(() => {
-    console.log(1)
-  },[] );
+  const [present] = useIonToast();
+  const [product, setProduct] = useState<Product | null>(null);
   
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
+  
+  const fetchProduct = async () => {
+    try {
+      const data = await getItemById(id);
+      setProduct(data);
+    } catch (error) {
+      present({
+        message: 'Error al cargar el producto',
+        duration: 2000,
+        color: 'danger'
+      });
+    }
+  };
 
-  const [descuento, setDescuento] = useState(product.descuento);
-  const aplicarDescuento = ( )=>{
-    setDescuento(0)
+  const [review, setReview] = useState('');
+  const [rating, setRating] = useState(5);
+
+  const handleAddToCart = async () => {
+    if (product) {
+      try {
+        await addItem(product._id, 1); 
+        present({
+          message: 'Producto añadido al carrito',
+          duration: 2000,
+          color: 'success'
+        });
+      } catch (error) {
+        present({
+          message: 'Error al añadir al carrito',
+          duration: 2000,
+          color: 'danger'
+        });
+      }
+    }
+  };
+  
+  const handleAddToWishlist = async () => {
+    if (product) {
+      try {
+        await addToWishlist(product._id); 
+        addToWishlist(product._id); 
+        present({
+          message: 'Producto añadido a la lista de deseos',
+          duration: 2000,
+          color: 'success'
+        });
+      } catch (error) {
+        present({
+          message: 'Error al añadir a la wishlist',
+          duration: 2000,
+          color: 'danger'
+        });
+      }
+    }
+  };
+
+  const handleSubmitReview = () => {
+    present({
+      message: 'Reseña enviada correctamente',
+      duration: 2000,
+      color: 'success'
+    });
+    setReview('');
+    setRating(5);
+  };
+
+  if (!product) {
+    return <div>Cargando...</div>;
   }
 
   return (
@@ -73,60 +121,52 @@ const Product: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <IonItem>
-            <IonLabel></IonLabel>
-            <IonSelect placeholder="Selecciona un filtro">
-              <IonSelectOption value="opcion1">Opción 1</IonSelectOption>
-              <IonSelectOption value="opcion2">Opción 2</IonSelectOption>
-              <IonSelectOption value="opcion3">Opción 3</IonSelectOption>
-            </IonSelect>
-          </IonItem>
+          <div className="product-container">
+            <img src={product.image} alt={product.name} className="product-image" />
+            
+            <div className="product-info">
+              <h1>{product.name}</h1>
+              <p className="price">${product.price.toLocaleString()}</p>
+              
+              <div className="user-controls">
+                <IonButton onClick={handleAddToCart}>
+                  <IonIcon slot="start" icon={cart} />
+                  Añadir al Carrito
+                </IonButton>
+                <IonButton onClick={handleAddToWishlist}>
+                  <IonIcon slot="start" icon={heart} />
+                  Añadir a Wishlist
+                </IonButton>
+              </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px 0' }}>
-            <IonButton onClick={() => scrollToSection('descripcion')} fill="default">Descripción</IonButton>
-            <IonButton onClick={() => scrollToSection('calificacion')} fill="default">Calificación</IonButton>
-          </div>
+              <div className="description">
+                <h2>Descripción</h2>
+                <p>{product.description}</p>
+              </div>
 
-          <img src={product.image} alt={product.name} style={{ width: '25%', height: 'auto' }} />
-          <IonButton color="light">
-            <IonIcon slot="icon-only" icon={heart}></IonIcon>
-          </IonButton>
-          <IonButton color="light">
-            <IonIcon slot="icon-only" icon={cart} ></IonIcon>
-          </IonButton>
-          
-          <div>
-            <h2>{product.price-descuento}<IonButton color="primary" onClick={aplicarDescuento}>Aplicar descuento</IonButton></h2>
+              <div className="review-section">
+                <h2 > Dejar una Reseña</h2>
+                <div className="rating-input">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <IonIcon
+                      key={star}
+                      icon="star"
+                      className={`star ${rating >= star ? 'selected' : ''}`}
+                      onClick={() => setRating(star)}
+                    />
+                  ))}
+                </div>
+                <IonTextarea
+                  placeholder="Escribe tu reseña aquí"
+                  value={review}
+                  onIonChange={e => setReview(e.detail.value!)}
+                />
+                <IonButton onClick={handleSubmitReview}>
+                  Enviar Reseña
+                </IonButton>
+              </div>
+            </div>
           </div>
-          <div>
-            <h2><IonIcon slot="icon-only" icon={storefrontOutline} >Unidades disponibles</IonIcon>{product.unidades} Unidades disponibles<IonButton color="primary">Cambiar stock</IonButton></h2>
-          </div>
-          
-          <IonCard id="descripcion">
-            <IonCardContent>
-              <h3>Descripción</h3>
-              <p>{product.description}</p>
-              <ul>
-                {product.features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
-              </ul>
-            </IonCardContent>
-          </IonCard>
-          
-          <IonCard id="calificacion">
-            <IonCardContent>
-              <h3>Calificación</h3>
-              <p>{product.likes} Me gustas</p>
-              <IonTextarea
-                aria-label="Custom textarea"
-                placeholder="Escribe tu opinión aquí"
-                class="custom"
-                counter={true}
-                maxlength={100}
-              ></IonTextarea>
-            </IonCardContent>
-          </IonCard>
         </IonContent>
       </IonPage>
     </Layout>

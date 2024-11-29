@@ -1,30 +1,123 @@
-/* Estilo para las imágenes del carrusel */
-.carousel img {
-  width: 100pc; /* Mantiene la proporción de la imagen */
+/* Estilos del carrusel */
+.carousel-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
+.main-carousel {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-.carousel .legend {
-  background: rgba(0, 0, 0, 0.5);
+.carousel-slide {
+  position: relative;
+  cursor: pointer;
+  height: 400px;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
   color: white;
-  padding: 10px;
-  font-size: 1.2em;
+  text-align: left;
+}
+
+.carousel-content h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.carousel-content p {
+  margin: 10px 0 0;
+  font-size: 16px;
+}
+
+/* Estilos de las categorías */
+.featured-categories {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featured-categories h2 {
   text-align: center;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.carousel {
-    width: 30vw !important;
-    margin: 0 auto !important;
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0 10px;
 }
 
-@media(max-width:900px){
-  .carousel {
-    width: 80vw !important;
-    margin: 0 auto !important;
-}
-  
+.category-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.slider.animated {
-  align-items: center;
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.category-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.category-card h3 {
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-slide {
+    height: 300px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-slide {
+    height: 200px;
+  }
+
+  .carousel-content h2 {
+    font-size: 20px;
+  }
+
+  .carousel-content p {
+    font-size: 14px;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,6 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonMenu, IonList, IonItem, IonMenuButton, IonFooter, IonPopover, useIonViewWillEnter, useIonViewDidLeave, IonMenuToggle, IonSearchbar } from '@ionic/react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import useAuthStore from '../store/authStore';
 import './Layout.css';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -12,6 +13,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [searchText, setSearchText] = useState('');
   const history = useHistory();
+  const { user, logout } = useAuthStore();
 
   useIonViewWillEnter(() => {
     setShowNavbar(true);
@@ -20,6 +22,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useIonViewDidLeave(() => {
     setShowNavbar(false);
   });
+
+  const handleLogout = () => {
+    logout();
+    history.push('/login');
+  };
 
   const togglePopover = (key: string, event: React.MouseEvent) => {
     setPopoverState({
@@ -31,13 +38,17 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const handleNavigation = (path: string) => {
     setPopoverState({ show: false, event: undefined, key: '' });
-    setShowNavbar(false);
-    history.push(path);
+    const finalPath = user?.role === 'admin' ? `/admin${path}` : path;
+    history.push(finalPath);
+  };
+
+  const handleSearch = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log('Buscar:', searchText);
   };
 
   return (
     <>
-      {/* Define el menú */}
       <IonMenu contentId="main-content">
         <IonHeader>
           <IonToolbar>
@@ -47,39 +58,61 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <IonContent>
           <IonList>
             <IonMenuToggle autoHide={false}>
-              <IonItem button routerLink="/home">Inicio</IonItem>
+              <IonItem button onClick={() => handleNavigation('/home')}>Inicio</IonItem>
               <IonItem button onClick={(e) => togglePopover('componentesPC', e)}>Componentes para PC</IonItem>
               <IonItem button onClick={(e) => togglePopover('notebooks', e)}>Notebooks</IonItem>
               <IonItem button onClick={(e) => togglePopover('pcsPreArmados', e)}>PC's Pre Armados</IonItem>
               <IonItem button onClick={(e) => togglePopover('servicioTecnico', e)}>Servicio Técnico</IonItem>
-              <IonItem button routerLink="/login">Iniciar Sesión</IonItem>
-              <IonItem button routerLink="/register">Registrarse</IonItem>
+              <IonItem button onClick={() => handleNavigation('/Carrito')}>Carrito</IonItem>
+              <IonItem button onClick={() => handleNavigation('/wishlist')}>Wishlist</IonItem>
+              {!user ? (
+                <>
+                  <IonItem button onClick={() => history.push('/login')}>Iniciar Sesión</IonItem>
+                  <IonItem button onClick={() => history.push('/register')}>Registrarse</IonItem>
+                </>
+              ) : (
+                <IonItem button onClick={handleLogout}>Cerrar Sesión</IonItem>
+              )}
             </IonMenuToggle>
           </IonList>
         </IonContent>
       </IonMenu>
 
-      {/* Define el contenido principal */}
       <IonPage id="main-content">
         {showNavbar && (
           <IonHeader>
             <IonToolbar>
               <IonButtons slot="start" className="navbar-buttons">
-                <IonButton routerLink="/home">Inicio</IonButton>
+                <IonButton onClick={() => handleNavigation('/home')}>Inicio</IonButton>
                 <IonButton onClick={(e) => togglePopover('componentesPC', e)}>Componentes para PC</IonButton>
                 <IonButton onClick={(e) => togglePopover('notebooks', e)}>Notebooks</IonButton>
                 <IonButton onClick={(e) => togglePopover('pcsPreArmados', e)}>PC's Pre Armados</IonButton>
                 <IonButton onClick={(e) => togglePopover('servicioTecnico', e)}>Servicio Técnico</IonButton>
+                <IonButton onClick={() => handleNavigation('/carrito')}>Carrito</IonButton>
+                <IonButton onClick={() => handleNavigation('/wishlist')}>Wishlist</IonButton>
               </IonButtons>
-              <IonSearchbar
-                value={searchText}
-                onIonChange={(e) => setSearchText(e.detail.value!)}
-                placeholder="Buscar"
-                style={{ maxWidth: '200px' }}
-              />
+              <form onSubmit={handleSearch}>
+                <IonSearchbar
+                  value={searchText}
+                  onIonChange={(e) => setSearchText(e.detail.value!)}
+                  placeholder="Buscar"
+                  style={{ maxWidth: '200px' }}
+                />
+              </form>
               <IonButtons slot="end" className="navbar-buttons">
-                <IonButton routerLink="/login">Iniciar Sesión</IonButton>
-                <IonButton routerLink="/register">Registrarse</IonButton>
+                {!user ? (
+                  <>
+                    <IonButton onClick={() => history.push('/login')}>Iniciar Sesión</IonButton>
+                    <IonButton onClick={() => history.push('/register')}>Registrarse</IonButton>
+                  </>
+                ) : (
+                  <>
+                    <IonButton onClick={handleLogout}>Cerrar Sesión</IonButton>
+                    {user.role === 'admin' && (
+                      <IonButton color="warning">Panel Admin</IonButton>
+                    )}
+                  </>
+                )}
               </IonButtons>
               <IonButtons slot="end" className="menu-button hide-on-large">
                 <IonMenuButton />
@@ -102,7 +135,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </IonFooter>
       </IonPage>
 
-      {/* Popovers para los botones de la barra de navegación */}
       <IonPopover
         isOpen={popoverState.show && popoverState.key === 'componentesPC'}
         event={popoverState.event}
@@ -115,39 +147,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <IonItem button onClick={() => handleNavigation('/componentes-pcs/psu')}>Fuentes de Poder</IonItem>
           <IonItem button onClick={() => handleNavigation('/componentes-pcs/motherboard')}>Placas Base</IonItem>
           <IonItem button onClick={() => handleNavigation('/componentes-pcs/coolers')}>Coolers</IonItem>
-        </IonList>
-      </IonPopover>
-      <IonPopover
-        isOpen={popoverState.show && popoverState.key === 'notebooks'}
-        event={popoverState.event}
-        onDidDismiss={() => setPopoverState({ show: false, event: undefined, key: '' })}
-      >
-        <IonList>
-          <IonItem button onClick={() => handleNavigation('/notebooks/gaming')}>Gaming</IonItem>
-          <IonItem button onClick={() => handleNavigation('/notebooks/trabajo')}>Trabajo</IonItem>
-          <IonItem button onClick={() => handleNavigation('/notebooks/todos')}>Todos los Notebooks</IonItem>
-        </IonList>
-      </IonPopover>
-      <IonPopover
-        isOpen={popoverState.show && popoverState.key === 'pcsPreArmados'}
-        event={popoverState.event}
-        onDidDismiss={() => setPopoverState({ show: false, event: undefined, key: '' })}
-      >
-        <IonList>
-          <IonItem button onClick={() => handleNavigation('/pcs-pre-armados/600k')}>PC de $600.000 o menos</IonItem>
-          <IonItem button onClick={() => handleNavigation('/pcs-pre-armados/1200k')}>PC de $1.200.000 o menos</IonItem>
-          <IonItem button onClick={() => handleNavigation('/pcs-pre-armados/arma-tu-pc')}>Arma tu PC</IonItem>
-        </IonList>
-      </IonPopover>
-      <IonPopover
-        isOpen={popoverState.show && popoverState.key === 'servicioTecnico'}
-        event={popoverState.event}
-        onDidDismiss={() => setPopoverState({ show: false, event: undefined, key: '' })}
-      >
-        <IonList>
-          <IonItem button onClick={() => handleNavigation('/servicio-tecnico/armado')}>Armado</IonItem>
-          <IonItem button onClick={() => handleNavigation('/servicio-tecnico/limpieza')}>Limpieza</IonItem>
-          <IonItem button onClick={() => handleNavigation('/servicio-tecnico/cotiza')}>Cotiza con un Experto</IonItem>
         </IonList>
       </IonPopover>
     </>

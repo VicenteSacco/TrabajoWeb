@@ -7,7 +7,7 @@ import Layout from '../components/Layout';
 import { getItems } from '../services/apiService';
 import './Home.css';
 
-const Home: React.FC = () => {
+const HomeAdmin: React.FC = () => {
   const history = useHistory();
   const [products, setProducts] = useState<any[]>([]);
 
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
 
 
   const handleProductClick = (id: string) => {
-    history.push(`/Product/${id}`);
+    history.push(`/ProductAdmin/${id}`);
   };
   
   return (
@@ -77,12 +77,12 @@ const Home: React.FC = () => {
             <h2>Categorías Destacadas</h2>
             <div className="category-grid">
               {[
-                { name: 'Procesadores', path: '/componentes-pcs/cpu', icon: '🔲' },
-                { name: 'Tarjetas Gráficas', path: '/componentes-pcs/gpu', icon: '🎮' },
-                { name: 'Memorias RAM', path: '/componentes-pcs/ram', icon: '💾' },
-                { name: 'Fuentes de Poder', path: '/componentes-pcs/psu', icon: '⚡' },
-                { name: 'Placas Base', path: '/componentes-pcs/motherboard', icon: '🔧' },
-                { name: 'Refrigeración', path: '/componentes-pcs/coolers', icon: '❄️' }
+                { name: 'Procesadores', path: '/admin/componentes-pcs/cpu', icon: '🔲' },
+                { name: 'Tarjetas Gráficas', path: '/admin/componentes-pcs/gpu', icon: '🎮' },
+                { name: 'Memorias RAM', path: '/admin/componentes-pcs/ram', icon: '💾' },
+                { name: 'Fuentes de Poder', path: '/admin/componentes-pcs/psu', icon: '⚡' },
+                { name: 'Placas Base', path: '/admin/componentes-pcs/motherboard', icon: '🔧' },
+                { name: 'Refrigeración', path: '/admin/componentes-pcs/coolers', icon: '❄️' }
               ].map(category => (
                 <div 
                   key={category.path}
@@ -101,4 +101,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default HomeAdmin;
